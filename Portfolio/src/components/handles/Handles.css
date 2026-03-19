@@ -1,6 +1,6 @@
 .socials {
   position: fixed;
-  left: 32px;
+  left: calc(32px + var(--safe-left));
   top: 50%;
   transform: translateY(-50%);
   display: flex;
@@ -36,7 +36,7 @@
 @media screen and (max-width: 860px) {
   .socials {
     position: fixed;
-    bottom: 24px;
+    bottom: calc(24px + var(--safe-bottom));
     left: 50%;
     transform: translateX(-50%);
     flex-direction: row;
@@ -46,10 +46,36 @@
     box-shadow: 0 18px 34px rgba(0, 0, 0, 0.2);
     border-radius: 999px;
     gap: 14px;
+    z-index: 999;
   }
 
   .socials a {
     width: 44px;
     height: 44px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .socials {
+    bottom: calc(16px + var(--safe-bottom));
+    padding: 6px 10px;
+    gap: 10px;
+  }
+
+  .socials a {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+  }
+
+  .socials .icon {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .socials {
+    display: none;
   }
 }
