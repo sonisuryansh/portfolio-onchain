@@ -6,6 +6,9 @@ import "./Footer.css";
 
 const Footer = () => {
   const year = new Date().getFullYear();
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <footer className="footer">
@@ -31,10 +34,13 @@ const Footer = () => {
           >
             <FaGithubSquare />
           </a>
+          <button type="button" className="footer__top-btn" onClick={scrollToTop} aria-label="Go to top">
+            Top
+          </button>
         </div>
       </div>
       <div className="footer__meta">
-        <p className="footer__copyright">Copyright © {year} Suryansh Soni. All rights reserved.</p>
+        <p className="footer__copyright">Copyright {"\u00A9"} {year} Suryansh Soni. All rights reserved.</p>
         <p className="footer__contract">Smart Contract: {CONTRACT_ADDRESS}</p>
         <p className="footer__note">
           This portfolio uses IPFS for content storage and the Sepolia testnet for blockchain

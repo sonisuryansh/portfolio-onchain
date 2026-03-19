@@ -14,7 +14,8 @@ import { CONTRACT_ADDRESS, READ_ONLY_RPC_URL } from "./config/web3";
 import "./index.css";
 
 function App() {
-  const BLOCKCHAIN_VIDEO_PUBLIC_PATH = "/videos/blockchain-bg.mp4";
+  const BLOCKCHAIN_VIDEO_PUBLIC_PATH =
+    import.meta.env.VITE_BACKGROUND_VIDEO_URL || "/videos/blockchain-bg.mp4";
   const [theme, setTheme] = useState(() => {
     if (typeof window === "undefined") return "dark";
 

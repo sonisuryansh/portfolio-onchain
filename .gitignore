@@ -9,3 +9,7 @@ dist/
 Thumbs.db
 .idea/
 .vscode/
+
+# Local background videos (keep .gitkeep tracked)
+Portfolio/public/videos/*.mp4
+Portfolio/public/videos/*.webm
