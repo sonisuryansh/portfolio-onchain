@@ -18,6 +18,12 @@
   letter-spacing: 0.1em;
   text-align: center;
   color: var(--color-title);
+  transition: color 220ms ease, text-shadow 220ms ease;
+}
+
+.contact-section .title:hover {
+  color: #3d6fb8;
+  text-shadow: 0 0 16px rgba(61, 111, 184, 0.28);
 }
 
 .contact-section .downlodeBTN {

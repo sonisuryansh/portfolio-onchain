@@ -1,7 +1,27 @@
-import {useState,useEffect} from "react";
+import { Fragment, useState, useEffect } from "react";
 import './Experience.css'
 import { SlCalender } from "react-icons/sl"
 
+const renderInteractiveTitle = (text) => (
+    <span className="interactive-title" aria-label={text}>
+        {text.split(" ").map((word, wordIndex, words) => (
+            <Fragment key={`${word}-${wordIndex}`}>
+                <span className="interactive-title__word" aria-hidden="true">
+                    {[...word].map((char, charIndex) => (
+                        <span key={`${char}-${charIndex}`} className="interactive-title__letter">
+                            {char}
+                        </span>
+                    ))}
+                </span>
+                {wordIndex < words.length - 1 && (
+                    <span className="interactive-title__space" aria-hidden="true">
+                        {"\u00A0"}
+                    </span>
+                )}
+            </Fragment>
+        ))}
+    </span>
+);
 
 const Experience = ({state}) => {
     const [education,setEducation]=useState([]);
@@ -30,12 +50,12 @@ const Experience = ({state}) => {
     },[state?.contract])
     return (
         <section className="exp-section" id="experience">
-            <h1 className="title">Experience & Education</h1>
+            <h1 className="title title--interactive">{renderInteractiveTitle("Experience & Education")}</h1>
 
             <div className="exp-container">
 
                 <div className="education">
-                    <h1 className="edu-title">Education</h1>
+                    <h1 className="edu-title edu-title--interactive">{renderInteractiveTitle("Education")}</h1>
                     {education &&
                         education.map((edu) => {
                             return (
@@ -68,7 +88,7 @@ const Experience = ({state}) => {
                 </div>
                 {/* experience */}
                 <div className="education">
-                    <h1 className="edu-title">Experience</h1>
+                    <h1 className="edu-title edu-title--interactive">{renderInteractiveTitle("Experience")}</h1>
                     <div className="edu-card">
                         <p className="card-text1">
                             <SlCalender className="icon" /> September 2025

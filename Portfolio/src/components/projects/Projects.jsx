@@ -3,6 +3,25 @@ import { FaDonate } from "react-icons/fa";
 import { Modal, ModalHeader, ModalBody, Row, Button } from "reactstrap";
 import "./Projects.css";
 
+const SIMPLE_WALLET_PROJECT = {
+  name: "SimpleWallet",
+  description:
+    "Secure custodial Ethereum wallet with owner-only access, controlled deposits/withdrawals, immutable transaction logs, and an emergency circuit breaker. Built with Solidity using Check-Effects-Interactions and input validation.",
+  image: "bafkreid577rkdnerykkvgcmsti57dfkluzfkmwg2hrl6w5aqqj3m2y6pdi",
+  githubLink: "Wallet-SmartContract",
+};
+
+const replaceKalpathonProject = (project) => {
+  if (!project?.name || !/kalpathon/i.test(project.name)) {
+    return project;
+  }
+
+  return {
+    ...project,
+    ...SIMPLE_WALLET_PROJECT,
+  };
+};
+
 const Projects = ({ state }) => {
   const [modal, setModal] = useState(false);
   const [projects, setProjects] = useState([]);
@@ -19,8 +38,9 @@ const Projects = ({ state }) => {
 
     const projectDetails = async () => {
       try {
-        const projects = await contract.methods.getAllProjects().call();
-        setProjects(projects || []);
+        const contractProjects = await contract.methods.getAllProjects().call();
+        const normalizedProjects = (contractProjects || []).map(replaceKalpathonProject);
+        setProjects(normalizedProjects);
         setLoadError("");
       } catch (err) {
         console.error(err);

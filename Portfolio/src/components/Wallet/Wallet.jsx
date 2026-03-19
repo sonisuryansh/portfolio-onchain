@@ -201,7 +201,7 @@ const Wallet = ({ saveState, state, theme, onToggleTheme }) => {
             />
           </div>
           <a className="brand" href="#home">
-            <span className="brand__name">Suryansh</span>
+            <span className="brand__name">{isMobileNav ? "Suryansh Soni" : "Suryansh"}</span>
             <span className="brand__tag">Web3 Developer</span>
           </a>
         </div>
