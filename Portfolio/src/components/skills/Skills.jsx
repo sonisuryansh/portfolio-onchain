@@ -22,12 +22,6 @@ const featuredSkills = [
   { name: "Git", image: git, keyName: "git" },
 ];
 
-const skillSignals = [
-  { value: "Frontend", label: "React interfaces with responsive UI systems" },
-  { value: "Backend", label: "APIs, Java services, and Node-based applications" },
-  { value: "Web3", label: "Solidity contracts, Ethereum tooling, and IPFS delivery" },
-];
-
 const capabilityGroups = [
   {
     title: "Application Engineering",
@@ -55,14 +49,6 @@ const Skills = () => {
               Full-stack development with a strong Web3 focus across frontend, backend, smart
               contracts, APIs, and developer tooling.
             </p>
-            <div className="skills-signals" aria-label="Core capability areas">
-              {skillSignals.map((signal) => (
-                <article key={signal.value} className="skills-signal">
-                  <span className="skills-signal__value">{signal.value}</span>
-                  <p>{signal.label}</p>
-                </article>
-              ))}
-            </div>
           </div>
 
           <div className="skills-featured" aria-label="Featured skills">

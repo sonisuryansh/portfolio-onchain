@@ -81,7 +81,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 90px;
+  scroll-padding-top: 78px;
 }
 
 html::-webkit-scrollbar {
@@ -137,7 +137,7 @@ section {
 }
 
 .app-main {
-  padding-top: 90px;
+  padding-top: 78px;
   position: relative;
   z-index: 1;
 }
