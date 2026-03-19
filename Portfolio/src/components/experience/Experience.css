@@ -1,0 +1,147 @@
+.exp-section {
+  width: 100%;
+  padding: 96px 0 88px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 42px;
+  color: var(--color-text);
+}
+
+.exp-section .title {
+  font-size: 2rem;
+  text-transform: uppercase;
+  padding-bottom: 6px;
+  border-bottom: 2px solid rgba(118, 167, 255, 0.24);
+  width: fit-content;
+  letter-spacing: 0.12em;
+  color: var(--color-title);
+}
+
+.exp-container {
+  width: 100%;
+  max-width: 1100px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(260px, 1fr));
+  gap: 28px;
+  padding: 0 24px;
+  align-items: start;
+}
+
+.education {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  min-width: 0;
+}
+
+.education .edu-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  margin-bottom: 10px;
+  color: var(--color-blue);
+}
+
+.education .edu-card {
+  background: var(--color-panel);
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: var(--shadow);
+  transition: transform 220ms ease, border 220ms ease, box-shadow 220ms ease;
+}
+
+.education .edu-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(118, 167, 255, 0.24);
+  box-shadow: 0 22px 44px rgba(0, 0, 0, 0.22);
+}
+
+.edu-card .card-text1 {
+  font-weight: 500;
+  color: var(--color-muted-2);
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.edu-card .card-text1 .icon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.8;
+}
+
+.edu-card .card-text2 {
+  color: var(--color-blue);
+  font-weight: 600;
+  font-size: 1.15rem;
+  margin: 0;
+}
+
+.edu-card .card-text3 {
+  font-weight: 400;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--color-muted);
+  margin: 0;
+}
+
+.edu-card .card-text4 {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--color-subtle-strong);
+  margin: 0;
+}
+
+.section-status {
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  margin-top: -6px;
+}
+
+@media screen and (max-width: 900px) {
+  .exp-container {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 0 20px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .exp-section {
+    padding: 76px 0 60px;
+  }
+
+  .exp-section .title {
+    font-size: 1.6rem;
+  }
+
+  .exp-container {
+    padding: 0 18px;
+  }
+
+  .education .edu-card {
+    padding: 18px;
+  }
+
+  .edu-card .card-text1 {
+    font-size: 0.8rem;
+  }
+
+  .edu-card .card-text2 {
+    font-size: 1.05rem;
+  }
+
+  .edu-card .card-text3 {
+    font-size: 0.85rem;
+  }
+
+  .edu-card .card-text4 {
+    font-size: 0.85rem;
+  }
+}

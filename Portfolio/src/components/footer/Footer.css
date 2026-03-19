@@ -1,0 +1,112 @@
+.footer {
+  position: relative;
+  width: 100%;
+  padding: 36px 24px 20px;
+  background: var(--color-panel-soft);
+  color: var(--color-text);
+  border-top: 1px solid var(--color-border);
+  overflow: hidden;
+}
+
+.footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(118, 167, 255, 0.08), transparent 22%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.01), transparent);
+  pointer-events: none;
+}
+
+.footer__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.footer__brand {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.footer__title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.footer__subtitle {
+  font-size: 14px;
+  color: var(--color-muted);
+}
+
+.footer__links {
+  display: flex;
+  gap: 16px;
+}
+
+.footer__links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: var(--color-panel-strong);
+  color: var(--color-blue);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+  transition: transform 180ms ease, background 180ms ease;
+}
+
+.footer__links a:hover {
+  background: var(--color-border);
+  transform: translateY(-2px);
+}
+
+.footer__meta {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 14px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  padding: 0 24px;
+}
+
+.footer__copyright,
+.footer__contract,
+.footer__note {
+  color: var(--color-muted);
+  font-size: 13px;
+  text-align: center;
+  margin: 0;
+}
+
+.footer__contract {
+  word-break: break-all;
+}
+
+.footer__note {
+  max-width: 760px;
+  line-height: 1.6;
+}
+
+@media screen and (max-width: 480px) {
+  .footer__inner {
+    justify-content: center;
+  }
+
+  .footer__links {
+    margin-top: 14px;
+  }
+}
