@@ -4,12 +4,18 @@ import Web3 from "web3";
 import { CONTRACT_ADDRESS } from "../../config/web3";
 import "./Wallet.css";
 
+const MOBILE_DRAWER_BREAKPOINT = 768;
+
 const Wallet = ({ saveState, state, theme, onToggleTheme }) => {
   const [connected, setConnected] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isMobileNav, setIsMobileNav] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.innerWidth <= MOBILE_DRAWER_BREAKPOINT;
+  });
   const [scrolled, setScrolled] = useState(false);
   const [avatarLoaded, setAvatarLoaded] = useState(false);
-  const [avatarSrc, setAvatarSrc] = useState("");
+  const [avatarSrc, setAvatarSrc] = useState(null);
 
   const isAndroid = typeof navigator !== "undefined" && /android/i.test(navigator.userAgent);
   const connectedAccount = state?.connectedAccount || "";
@@ -34,6 +40,54 @@ const Wallet = ({ saveState, state, theme, onToggleTheme }) => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  useEffect(() => {
+    const syncViewport = () => {
+      const mobile = window.innerWidth <= MOBILE_DRAWER_BREAKPOINT;
+      setIsMobileNav(mobile);
+
+      if (!mobile) {
+        setMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", syncViewport, { passive: true });
+    syncViewport();
+
+    return () => {
+      window.removeEventListener("resize", syncViewport);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isMobileNav) return undefined;
+
+    const originalOverflow = document.body.style.overflow;
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = originalOverflow || "";
+    }
+
+    return () => {
+      document.body.style.overflow = originalOverflow || "";
+    };
+  }, [isMobileNav, menuOpen]);
+
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+
+    const handleEsc = (event) => {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleEsc);
+    return () => {
+      window.removeEventListener("keydown", handleEsc);
+    };
+  }, [menuOpen]);
 
   useEffect(() => {
     if (!window?.ethereum) return;
@@ -71,7 +125,7 @@ const Wallet = ({ saveState, state, theme, onToggleTheme }) => {
     const contract = state?.contract;
 
     if (!contract) {
-      setAvatarSrc("");
+      setAvatarSrc(null);
       setAvatarLoaded(false);
       return;
     }
@@ -82,11 +136,11 @@ const Wallet = ({ saveState, state, theme, onToggleTheme }) => {
         if (imageCid) {
           setAvatarSrc(`https://gateway.pinata.cloud/ipfs/${imageCid}`);
         } else {
-          setAvatarSrc("");
+          setAvatarSrc(null);
         }
       } catch (err) {
         console.error(err);
-        setAvatarSrc("");
+        setAvatarSrc(null);
       }
     };
 
@@ -139,7 +193,7 @@ const Wallet = ({ saveState, state, theme, onToggleTheme }) => {
             </span>
             <img
               className={`header__avatar-image ${avatarLoaded ? "header__avatar-image--loaded" : ""}`}
-              src={avatarSrc}
+              src={avatarSrc || null}
               alt="Profile"
               loading="lazy"
               onLoad={() => setAvatarLoaded(true)}
@@ -152,13 +206,15 @@ const Wallet = ({ saveState, state, theme, onToggleTheme }) => {
           </a>
         </div>
 
-        <nav className={`nav ${menuOpen ? "nav--open" : ""}`}>
-          {navLinks.map((link) => (
-            <a key={link.href} href={link.href} onClick={() => setMenuOpen(false)}>
-              {link.label}
-            </a>
-          ))}
-        </nav>
+        {!isMobileNav && (
+          <nav className="site-nav">
+            {navLinks.map((link) => (
+              <a key={link.href} href={link.href} onClick={() => setMenuOpen(false)}>
+                {link.label}
+              </a>
+            ))}
+          </nav>
+        )}
 
         <div className="header__actions">
           <div className="wallet-status" aria-label="Portfolio connection status">
@@ -202,6 +258,8 @@ const Wallet = ({ saveState, state, theme, onToggleTheme }) => {
             className="menu-toggle"
             onClick={() => setMenuOpen((open) => !open)}
             aria-label="Toggle navigation"
+            aria-expanded={menuOpen}
+            aria-controls="mobile-navigation-drawer"
           >
             <span />
             <span />
@@ -211,6 +269,78 @@ const Wallet = ({ saveState, state, theme, onToggleTheme }) => {
       </div>
       {isReadOnly && !menuOpen && (
         <div className="header__mode-banner">Portfolio data is loading in read-only mode until a wallet connects.</div>
+      )}
+
+      {isMobileNav && (
+        <>
+          <button
+            type="button"
+            className={`mobile-drawer__backdrop ${menuOpen ? "mobile-drawer__backdrop--open" : ""}`}
+            onClick={() => setMenuOpen(false)}
+            aria-label="Close navigation menu"
+          />
+
+          <aside
+            id="mobile-navigation-drawer"
+            className={`mobile-drawer ${menuOpen ? "mobile-drawer--open" : ""}`}
+            aria-hidden={!menuOpen}
+          >
+            <div className="mobile-drawer__profile">
+              <div className="mobile-drawer__avatar">
+                <span
+                  className={`mobile-drawer__avatar-fallback ${
+                    avatarLoaded ? "mobile-drawer__avatar-fallback--hidden" : ""
+                  }`}
+                  aria-hidden={avatarLoaded}
+                >
+                  SS
+                </span>
+                <img
+                  className={`mobile-drawer__avatar-image ${avatarLoaded ? "mobile-drawer__avatar-image--loaded" : ""}`}
+                  src={avatarSrc || null}
+                  alt="Profile"
+                  loading="lazy"
+                  onLoad={() => setAvatarLoaded(true)}
+                  onError={() => setAvatarLoaded(false)}
+                />
+              </div>
+              <h3>Suryansh Soni</h3>
+              <p>Web3 Developer</p>
+            </div>
+
+            <nav className="mobile-drawer__nav" aria-label="Mobile navigation">
+              {navLinks.map((link) => (
+                <a key={link.href} href={link.href} onClick={() => setMenuOpen(false)}>
+                  {link.label}
+                </a>
+              ))}
+            </nav>
+
+            <div className="mobile-drawer__meta">
+              <span>{connected ? shortAccount : "Read-only mode"}</span>
+            </div>
+
+            <div className="mobile-drawer__actions">
+              <button
+                className="theme-toggle mobile-drawer__theme-toggle"
+                onClick={onToggleTheme}
+                type="button"
+                aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+              >
+                <span className="theme-toggle__icon">{theme === "dark" ? "Light" : "Dark"}</span>
+              </button>
+              <button
+                className={`connectBTN mobile-drawer__connect ${connected ? "connected" : ""}`}
+                onClick={init}
+                disabled={connected}
+                title={connected ? connectedAccount : "Connect wallet"}
+              >
+                {connected ? "Connected" : "Connect Wallet"}
+              </button>
+            </div>
+
+          </aside>
+        </>
       )}
     </header>
   );
