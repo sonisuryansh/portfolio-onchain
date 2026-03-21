@@ -1,6 +1,6 @@
 import { Fragment, useState, useEffect } from "react";
-import './Experience.css'
-import { SlCalender } from "react-icons/sl"
+import "./Experience.css";
+import { SlCalender } from "react-icons/sl";
 
 const renderInteractiveTitle = (text) => (
     <span className="interactive-title" aria-label={text}>
@@ -23,11 +23,11 @@ const renderInteractiveTitle = (text) => (
     </span>
 );
 
-const Experience = ({state}) => {
-    const [education,setEducation]=useState([]);
+const Experience = ({ state }) => {
+    const [education, setEducation] = useState([]);
     const [loadError, setLoadError] = useState("");
 
-    useEffect(()=>{
+    useEffect(() => {
         const contract = state?.contract;
         if (!contract) {
             setEducation([]);
@@ -35,7 +35,7 @@ const Experience = ({state}) => {
             return;
         }
 
-        const educationDetails=async()=>{
+        const educationDetails = async () => {
             try {
                 const education = await contract.methods.getAllEducation().call();
                 setEducation(education || []);
@@ -45,15 +45,15 @@ const Experience = ({state}) => {
                 setEducation([]);
                 setLoadError("Unable to load education cards from the connected contract.");
             }
-        }
+        };
         educationDetails();
-    },[state?.contract])
+    }, [state?.contract]);
+
     return (
         <section className="exp-section" id="experience">
             <h1 className="title title--interactive">{renderInteractiveTitle("Experience & Education")}</h1>
 
             <div className="exp-container">
-
                 <div className="education">
                     <h1 className="edu-title edu-title--interactive">{renderInteractiveTitle("Education")}</h1>
                     {education &&
@@ -84,9 +84,8 @@ const Experience = ({state}) => {
                     {state?.contract && !loadError && education.length === 0 && (
                         <p className="section-status">No education cards were returned by this contract yet.</p>
                     )}
-
                 </div>
-                {/* experience */}
+
                 <div className="education">
                     <h1 className="edu-title edu-title--interactive">{renderInteractiveTitle("Experience")}</h1>
                     <div className="edu-card">
@@ -95,19 +94,26 @@ const Experience = ({state}) => {
                         </p>
                         <h3 className="card-text2">Blockchain & Web3 Engineer</h3>
                         <p className="card-text3">
-                             Handled Web3 integration along with backend logic and API workflows, while developing and deploying ERC-20 smart contracts using Solidity with MetaMask and Ethers.js integration.
+                            Handled Web3 integration along with backend logic and API workflows,
+                            while developing and deploying ERC-20 smart contracts using Solidity
+                            with MetaMask and Ethers.js integration.
                         </p>
                         <p className="card-text4">Suryansh Soni</p>
                     </div>
                     <div className="edu-card">
                         <p className="card-text1">
-                            <SlCalender className="icon" /> September 2024 - August 2025
+                            <SlCalender className="icon" /> Completed Virtual Internship
                         </p>
-                        <h3 className="card-text2">Aaina Technical Member</h3>
+                        <h3 className="card-text2">Generative AI Virtual Intern</h3>
                         <p className="card-text3">
-                            Worked as a Technical Member at Aaina, the central forum of the university, for one year—contributing to technical initiatives and actively managing multiple events.
+                            Completed a virtual internship in Generative AI through IBM Skills
+                            Network, gaining hands-on exposure to foundation models, prompt
+                            engineering, and real-world AI applications. Explored how
+                            Generative AI can be integrated into software systems while
+                            strengthening AI-driven problem solving through industry-relevant
+                            workflows.
                         </p>
-                        <p className="card-text4">Suryansh Soni</p>
+                        <p className="card-text4">IBM Skills Network</p>
                     </div>
                     <div className="edu-card">
                         <p className="card-text1">
@@ -115,14 +121,16 @@ const Experience = ({state}) => {
                         </p>
                         <h3 className="card-text2">Java Intern</h3>
                         <p className="card-text3">
-                           Worked at HCLTech from December 2023 to February 2024 as a Java Developer, contributing to development tasks and gaining hands-on experience in backend programming.
+                            Worked at HCLTech from December 2023 to February 2024 as a Java
+                            Developer, contributing to development tasks and gaining hands-on
+                            experience in backend programming.
                         </p>
-                        <p className="card-text4">Suryansh Soni</p>
+                        <p className="card-text4">HCLTech</p>
                     </div>
                 </div>
             </div>
         </section>
     );
-}
+};
 
-export default Experience
+export default Experience;
